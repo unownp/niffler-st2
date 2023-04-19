@@ -1,3 +1,5 @@
+GEESEFETCHER:12345
+
 ## **Технологии, использованные в Niffler**
 
 - [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)

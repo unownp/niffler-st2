@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="niffler.test.SpendsWebTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-19T20:51:28" hostname="LAPTOP-Q4K5B932" time="14.71">
+  <properties/>
+  <testcase name="spendShouldBeDeletedByActionInTable(SpendJson)" classname="niffler.test.SpendsWebTest" time="14.71"/>
+  <system-out><![CDATA[
+]]></system-out>
+  <system-err><![CDATA[Starting ChromeDriver 112.0.5615.49 (bd2a7bcb881c11e8cfe3078709382934e3916914-refs/branch-heads/5615@{#936}) on port 12601
+Only local connections are allowed.
+Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+ChromeDriver was started successfully.
+апр. 19, 2023 11:51:37 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find an exact match for CDP version 112, so returning the closest version found: 111
+]]></system-err>
+</testsuite>
