@@ -2,6 +2,7 @@ package niffler.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,6 +25,19 @@ public class UserJson {
     @JsonProperty("friendState")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private FriendState friendState;
+
+    @Override
+    public String toString() {
+        return "UserJson{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", currency=" + currency +
+                ", photo='" + photo + '\'' +
+                ", friendState=" + friendState +
+                '}';
+    }
 
     public UserJson() {
     }

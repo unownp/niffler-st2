@@ -31,13 +31,13 @@ public class UsersQueueExtension implements
 
   static {
     USERS_WITH_FRIENDS_QUEUE.addAll(
-        List.of(userJson("dima", "12345"), userJson("barsik", "12345"))
+        List.of(userJson("ZHABROSLI", "12345"), userJson("ELGATO", "12345"))
     );
     USERS_INVITATION_SENT_QUEUE.addAll(
-        List.of(userJson("emma", "12345"), userJson("emily", "12345"))
+        List.of(userJson("ZABOBON", "12345"), userJson("VAGABOND", "12345"))
     );
     USERS_INVITATION_RECEIVED_QUEUE.addAll(
-        List.of(userJson("anna", "12345"), userJson("bill", "12345"))
+        List.of(userJson("GEESECATCHER", "12345"), userJson("GEESEFETCHER", "12345"))
     );
   }
 
@@ -70,7 +70,7 @@ public class UsersQueueExtension implements
     final String testId = getTestId(context);
     Map<UserType, UserJson> user = (Map<UserType, UserJson>) context.getStore(USER_EXTENSION_NAMESPACE)
         .get(testId);
-
+    System.out.println(user);
     UserType userType = user.keySet().iterator().next();
     switch (userType) {
       case WITH_FRIENDS -> USERS_WITH_FRIENDS_QUEUE.add(user.get(userType));
