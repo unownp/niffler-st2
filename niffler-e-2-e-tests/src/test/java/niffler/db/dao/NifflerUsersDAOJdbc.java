@@ -31,7 +31,6 @@ public class NifflerUsersDAOJdbc implements NifflerUsersDAO {
                 conn.setAutoCommit(false);
 
                 UUID uuid = randomUUID();
-                System.out.println(uuid);
                 st.setObject(1, uuid.toString(), Types.OTHER);
                 st.setString(2, user.getUsername());
                 st.setString(3, pe.encode(user.getPassword()));

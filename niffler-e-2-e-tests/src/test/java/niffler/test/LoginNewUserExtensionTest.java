@@ -30,12 +30,4 @@ public class LoginNewUserExtensionTest extends BaseWebTest {
         $(".header").should(visible).shouldHave(text("Niffler. The coin keeper."));
     }
 
-    @Test
-    void deleteTest() {
-        NifflerUsersDAO usersDAO = new NifflerUsersDAOJdbc();
-        UserEntity ue;
-        ue = new UserEntity();
-        ue.setUsername("ELGATO");
-        System.out.println(usersDAO.readUser(ue));
-    }
 }
