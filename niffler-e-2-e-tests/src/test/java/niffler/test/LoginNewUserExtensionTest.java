@@ -4,17 +4,11 @@ import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Allure;
 import niffler.db.dao.NifflerUsersDAO;
 import niffler.db.dao.NifflerUsersDAOJdbc;
-import niffler.db.entity.Authority;
-import niffler.db.entity.AuthorityEntity;
 import niffler.db.entity.UserEntity;
 import niffler.jupiter.annotation.GenerateRandomUserEntity;
 import niffler.jupiter.extension.GenerateRandomUserEntityExtension;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
