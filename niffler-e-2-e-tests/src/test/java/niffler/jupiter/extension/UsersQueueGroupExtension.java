@@ -87,7 +87,7 @@ public class UsersQueueGroupExtension implements
                                      ExtensionContext extensionContext) throws ParameterResolutionException {
         final String testId = getTestId(extensionContext);
 
-        Map<UserJson, UserType> user = (Map<UserJson, UserType>) extensionContext.getStore(USER_EXTENSION_NAMESPACE)
+        LinkedHashMap<UserJson, UserType> user = (LinkedHashMap<UserJson, UserType>) extensionContext.getStore(USER_EXTENSION_NAMESPACE)
                 .get(testId);
         return (UserJson) user.keySet().toArray()[parameterContext.getIndex()];
     }

@@ -22,9 +22,8 @@ public class FriendsGroupWebTest extends BaseWebTest {
 
     @AllureId("106")
     @Test
-    void friendsShouldBeVisible0(@User(userType = WITH_FRIENDS) UserJson user1
-            , @User(userType = INVITATION_SENT) UserJson user2
-    ) {
+    void friendsShouldBeVisible0(@User(userType = WITH_FRIENDS) UserJson user1,
+                                 @User(userType = INVITATION_SENT) UserJson user2) {
 
         Allure.step("open page", () -> Selenide.open("http://127.0.0.1:3000/main"));
         logIn(user1);
@@ -43,9 +42,8 @@ public class FriendsGroupWebTest extends BaseWebTest {
 
     @AllureId("107")
     @Test
-    void friendsShouldBeVisible1(@User(userType = WITH_FRIENDS) UserJson user1
-            , @User(userType = INVITATION_SENT) UserJson user2
-    ) {
+    void friendsShouldBeVisible1(@User(userType = WITH_FRIENDS) UserJson user1,
+                                 @User(userType = INVITATION_SENT) UserJson user2) {
 
         Allure.step("open page", () -> Selenide.open("http://127.0.0.1:3000/main"));
         logIn(user1);
