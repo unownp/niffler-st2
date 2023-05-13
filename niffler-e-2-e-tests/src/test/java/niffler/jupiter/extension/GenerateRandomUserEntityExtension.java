@@ -17,10 +17,10 @@ public class GenerateRandomUserEntityExtension implements ParameterResolver, Bef
     public static ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace
             .create(GenerateRandomUserEntityExtension.class);
     NifflerUsersDAO usersDAO = new NifflerUsersDAOJdbc();
-    UserEntity ue = new UserEntity();
 
     @Override
     public void beforeEach(ExtensionContext context) {
+        UserEntity ue = new UserEntity();
         GenerateRandomUserEntity annotation = context.getRequiredTestMethod()
                 .getAnnotation(GenerateRandomUserEntity.class);
 
@@ -58,8 +58,10 @@ public class GenerateRandomUserEntityExtension implements ParameterResolver, Bef
 
     @Override
     public void afterEach(ExtensionContext context) {
+        UserEntity ue = context.getStore(NAMESPACE).get("userEntity", UserEntity.class);
         GenerateRandomUserEntity annotation = context.getRequiredTestMethod()
                 .getAnnotation(GenerateRandomUserEntity.class);
+
         if (annotation != null) {
             usersDAO.removeUser(ue);
         }

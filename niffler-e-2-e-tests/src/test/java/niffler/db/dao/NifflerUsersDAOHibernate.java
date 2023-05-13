@@ -22,13 +22,7 @@ public class NifflerUsersDAOHibernate extends JpaTransactionManager implements N
 
     @Override
     public int updateUser(UserEntity user) {
-        UserEntity userDb = em.find(UserEntity.class, UUID.fromString(getUserId(user.getUsername())));
-        userDb.setPassword(pe.encode(user.getPassword()));
-        userDb.setEnabled(user.getEnabled());
-        userDb.setAccountNonExpired(user.getAccountNonExpired());
-        userDb.setAccountNonLocked(user.getAccountNonLocked());
-        userDb.setCredentialsNonExpired(user.getCredentialsNonExpired());
-        merge(userDb);
+        merge(user);
         return 0;
     }
 
@@ -45,5 +39,11 @@ public class NifflerUsersDAOHibernate extends JpaTransactionManager implements N
     public int removeUser(UserEntity user) {
         remove(user);
         return 0;
+    }
+
+    @Override
+    public UserEntity getUser(String userName) {
+        UUID uuid = UUID.fromString(getUserId(userName));
+        return em.find(UserEntity.class, uuid);
     }
 }
