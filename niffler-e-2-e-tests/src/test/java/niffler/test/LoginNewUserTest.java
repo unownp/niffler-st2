@@ -3,6 +3,7 @@ package niffler.test;
 import com.github.javafaker.Faker;
 import niffler.db.dao.NifflerUsersDAO;
 import niffler.db.dao.NifflerUsersDAOJdbc;
+import niffler.db.dao.NifflerUsersDAOSpringJdbc;
 import niffler.db.entity.Authority;
 import niffler.db.entity.AuthorityEntity;
 import niffler.db.entity.UserEntity;
@@ -19,8 +20,8 @@ public class LoginNewUserTest extends BaseWebTest {
 
     private static Faker faker = new Faker();
     //    private NifflerUsersDAO usersDAO = new NifflerUsersDAOHibernate();
-    // private NifflerUsersDAO usersDAO = new NifflerUsersDAOSpringJdbc();
-    private NifflerUsersDAO usersDAO = new NifflerUsersDAOJdbc();
+     private NifflerUsersDAO usersDAO = new NifflerUsersDAOSpringJdbc();
+//    private NifflerUsersDAO usersDAO = new NifflerUsersDAOJdbc();
     private UserEntity ue;
 
     private static final String TEST_PWD = "1234567";
@@ -29,6 +30,7 @@ public class LoginNewUserTest extends BaseWebTest {
     void updateUserForTest() {
 
         ue = usersDAO.getUser("muchogusto2");
+        System.out.println(ue);
         ue.setPassword(pe.encode(TEST_PWD));
         ue.setEnabled(true);
         ue.setAccountNonExpired(true);
@@ -36,17 +38,15 @@ public class LoginNewUserTest extends BaseWebTest {
         ue.setCredentialsNonExpired(true);
         List<Authority> newAuthorities = new ArrayList<>();
         newAuthorities.add(Authority.read);
-        newAuthorities.add(Authority.write);
-//        newAuthorities.add(Authority.admin);
-//        newAuthorities.add(Authority.premiumUser);
+  //      newAuthorities.add(Authority.write);
+  //      newAuthorities.add(Authority.admin);
+        newAuthorities.add(Authority.premiumUser);
         List<AuthorityEntity> listAuthorityEntity = ue.getAuthorities();
         List<Authority> currentAuthorities = listAuthorityEntity.stream().map(AuthorityEntity::getAuthority).toList();
         List<Authority> authoritiesToWrite = new ArrayList<>(newAuthorities);
         List<Authority> authoritiesToDelete = new ArrayList<>(currentAuthorities);
         authoritiesToWrite.removeAll(currentAuthorities);
-        System.out.println(authoritiesToWrite.size());
         authoritiesToDelete.removeAll(newAuthorities);
-        System.out.println(authoritiesToDelete.size());
         for (Authority authority : authoritiesToDelete) {
             listAuthorityEntity.removeIf(authorityEntity -> authorityEntity.getAuthority().equals(authority));
         }

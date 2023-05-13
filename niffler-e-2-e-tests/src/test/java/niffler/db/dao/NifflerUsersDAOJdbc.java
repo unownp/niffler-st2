@@ -181,7 +181,6 @@ public class NifflerUsersDAOJdbc implements NifflerUsersDAO {
                 userEntity.setAccountNonExpired(userResultSet.getBoolean(5));
                 userEntity.setAccountNonLocked(userResultSet.getBoolean(6));
                 userEntity.setCredentialsNonExpired(userResultSet.getBoolean(7));
-                System.out.println(userEntity);
 
             } else {
                 throw new IllegalArgumentException("Can`t find user by given username: " + userName);
