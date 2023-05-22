@@ -3,7 +3,7 @@ buildscript {
         protobufVersion = '3.21.12'
         grpcVersion = '1.52.1'
         allureVersion = '2.21.0'
-        aspectjVersion = '1.9.19'
+      //  aspectjVersion = '1.9.19'
         selenideVersion = '6.13.0'
         retrofitVersion = '2.9.0'
         springComponentsVersion = '6.0.3'
@@ -25,11 +25,11 @@ repositories {
 
 allure {
     version.set("${allureVersion}")
-    adapter {
-        aspectjVersion.set("${aspectjVersion}")
-        autoconfigure.set(true)
-        aspectjWeaver.set(true)
-    }
+//    adapter {
+//        aspectjVersion.set("${aspectjVersion}")
+//        autoconfigure.set(true)
+//        aspectjWeaver.set(true)
+//    }
 }
 
 dependencies {
@@ -48,12 +48,14 @@ dependencies {
     testImplementation 'com.github.vertical-blank:sql-formatter:2.0.3'
     // Allure
     testImplementation "io.qameta.allure:allure-attachments:${allureVersion}"
-    testImplementation("io.qameta.allure:allure-junit5:${allureVersion}") {
+    testImplementation("io.qameta.allure:allure-junit5:${allureVersion}")
+            {
         exclude group: "org.junit.jupiter-api"
         exclude group: "org.junit.platform"
         exclude group: "org.junit.jupiter"
     }
-    testImplementation("io.qameta.allure:allure-selenide:${allureVersion}") {
+    testImplementation("io.qameta.allure:allure-selenide:${allureVersion}")
+            {
         exclude group: 'com.codeborne'
     }
     testImplementation "io.qameta.allure:allure-okhttp3:${allureVersion}"
@@ -67,7 +69,9 @@ dependencies {
     testImplementation 'com.google.code.findbugs:jsr305:3.0.2'
     // gRPC
     testImplementation "io.grpc:grpc-protobuf:${grpcVersion}"
-    testImplementation "io.grpc:grpc-stub:${grpcVersion}"
+    testImplementation ("io.grpc:grpc-stub:${grpcVersion}") {
+        exclude group: "com.google.guava"
+    }
     testImplementation "io.grpc:grpc-netty:${grpcVersion}"
     testImplementation "com.google.protobuf:protobuf-java:${protobufVersion}"
     testImplementation project(':niffler-grpc-common')

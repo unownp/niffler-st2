@@ -36,4 +36,21 @@ public class LocalConfig implements Config {
   public String getAuthUrl() {
     return "http://127.0.0.1:9000/";
   }
+
+  @Override
+  public String getBaseUrl() {
+    return "http://127.0.0.1";
+  }
+
+  @Override
+  public String getOauth2Port() {
+    return "9000";
+  }
+
+  @Override
+  public String getFrontPort() {
+    return "3000";
+  }
+
+
 }
