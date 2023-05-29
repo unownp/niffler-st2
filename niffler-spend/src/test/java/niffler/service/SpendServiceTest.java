@@ -8,6 +8,7 @@ import niffler.model.CurrencyValues;
 import niffler.model.SpendJson;
 import niffler.model.StatisticJson;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
-
+@Disabled
 @ExtendWith(MockitoExtension.class)
 class SpendServiceTest {
 

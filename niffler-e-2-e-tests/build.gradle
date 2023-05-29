@@ -7,6 +7,7 @@ buildscript {
         selenideVersion = '6.13.0'
         retrofitVersion = '2.9.0'
         springComponentsVersion = '6.0.3'
+        restAssured = '5.3.0'
     }
 }
 
@@ -34,11 +35,19 @@ allure {
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-
+    testImplementation 'org.assertj:assertj-core:3.24.2'
     // REST
     testImplementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     testImplementation "com.squareup.retrofit2:converter-jackson:${retrofitVersion}"
     testImplementation 'com.squareup.okhttp3:logging-interceptor:3.14.9'
+    testImplementation "io.rest-assured:rest-assured:${restAssured}"
+    testImplementation "io.rest-assured:json-schema-validator:${restAssured}"
+    testImplementation "io.rest-assured:json-path:${restAssured}"
+    testImplementation "io.rest-assured:xml-path:${restAssured}"
+    testImplementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    testImplementation 'org.apache.httpcomponents:httpcore:4.4.15'
+//    testImplementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+//    testImplementation 'org.glassfish.jaxb:jaxb-runtime:4.0.2'
     // DB
     testImplementation "org.springframework.security:spring-security-crypto:${springComponentsVersion}"
     testImplementation "org.springframework:spring-jdbc:${springComponentsVersion}"
@@ -82,6 +91,7 @@ dependencies {
 }
 
 test {
+    workingDir "${rootDir}"
     options {
         systemProperties(System.getProperties())
     }

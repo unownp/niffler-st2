@@ -104,4 +104,18 @@ public class UserJson {
     public int hashCode() {
         return Objects.hash(id, username, firstname, surname, currency, photo, friendState);
     }
+
+    @Override
+    public String toString() {
+        return "UserJson{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", currency=" + currency +
+                ", photo='" + photo + '\'' +
+                ", friendState=" + friendState +
+                '}';
+    }
 }

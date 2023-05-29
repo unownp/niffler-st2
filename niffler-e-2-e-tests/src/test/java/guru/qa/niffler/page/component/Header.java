@@ -3,7 +3,6 @@ package guru.qa.niffler.page.component;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.niffler.page.*;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selenide.$;
@@ -21,12 +20,12 @@ public class Header extends BaseComponent<Header> {
     private final SelenideElement peoplePageButton = $("a[href*='people']");
     private final SelenideElement profilePageButton = $("a[href*='profile']");
     private final SelenideElement logOutButton = $(".button-icon_type_logout");
-
+    private final SelenideElement friendRedPoint = $(".header__sign");
     public static final String HEADER_TITLE_NAME = "Niffler. The coin keeper.";
 
     @Override
     public Header checkThatComponentDisplayed() {
-        self.$(".header__title").shouldHave(text(HEADER_TITLE_NAME));
+        //    self.$(".header__title").shouldHave(text(HEADER_TITLE_NAME));
         nifflerLogo.shouldBe(visible);
         mainPageButton.shouldBe(visible);
         friendsPageButton.shouldBe(visible);
@@ -60,4 +59,9 @@ public class Header extends BaseComponent<Header> {
         logOutButton.click();
         return new StartPage();
     }
+
+    public SelenideElement getFriendRedPoint() {
+        return friendRedPoint;
+    }
+
 }

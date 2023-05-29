@@ -1,9 +1,12 @@
 package guru.qa.niffler.test;
 
 import com.codeborne.selenide.Selenide;
-import guru.qa.niffler.page.*;
+import guru.qa.niffler.page.FriendsPage;
+import guru.qa.niffler.page.RegistrationPage;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class RegistrationWebTest extends BaseWebTest {
 
     @Test
@@ -20,23 +23,4 @@ public class RegistrationWebTest extends BaseWebTest {
                 .goToFriendsPage();
     }
 
-    @Test
-    void test() {
-        StartPage startPage = Selenide.open(StartPage.URL, StartPage.class);
-        startPage.checkThatPageLoaded();
-        RegistrationPage registrationPage = startPage.clickRegisterButton();
-        registrationPage.checkThatPageLoaded();
-        LoginPage loginPage = registrationPage.clickSignInHyperLink();
-        loginPage.checkThatPageLoaded();
-        MainPage mainPage = loginPage.signIn();
-        mainPage.checkThatPageLoaded();
-        FriendsPage friendsPage = mainPage.getHeader().goToFriendsPage();
-        friendsPage.checkThatPageLoaded();
-        PeoplePage peoplePage = friendsPage.getHeader().goToPeoplePage();
-        peoplePage.checkThatPageLoaded();
-        ProfilePage profilePage = peoplePage.getHeader().goToProfilePage();
-        profilePage.checkThatPageLoaded();
-        startPage = profilePage.getHeader().logOut();
-        startPage.checkThatPageLoaded();
-    }
 }

@@ -95,7 +95,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public MainPage signIn() {
-        getUserNameInput().setValue("ELGATO");
+        getUserNameInput().setValue(USERNAME);
         getPasswordInput().setValue("12345");
         signInButton.click();
         return new MainPage();

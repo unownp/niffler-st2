@@ -1,16 +1,25 @@
 package guru.qa.niffler.page;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.github.javafaker.Faker;
 import guru.qa.niffler.page.component.Footer;
 import guru.qa.niffler.page.component.Header;
+import guru.qa.niffler.page.component.Toastify;
+import org.openqa.selenium.Keys;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MainPage extends BasePage<MainPage> {
 
@@ -18,15 +27,20 @@ public class MainPage extends BasePage<MainPage> {
     private final Footer footer = new Footer();
 
     private final SelenideElement mainContentAddSpending = $(".main-content__section.main-content__section-add-spending");
-    private final SelenideElement categoryInput = mainContentAddSpending.$("#react-select-3-input");
-    private final SelenideElement categoryInputPlaceHolder = mainContentAddSpending.$("#react-select-3-placeholder");
-    private final SelenideElement categoryInputDropDown = mainContentAddSpending.$("#react-select-3-listbox");
+    private final SelenideElement categoryInput = mainContentAddSpending.$x(".//input[contains(@id,'react-select') and contains(@id,'-input')]");
+    private final SelenideElement categoryInputPlaceHolder =
+            mainContentAddSpending.$x(".//div[contains(@id,'react-select') and contains(@id,'-placeholder')]");
+    private final SelenideElement categoryInputDropDown =
+            mainContentAddSpending.$(".//div[contains(@id,'react-select') and contains(@id,'-listbox')]");
+    private final ElementsCollection categoryInputListBoxCategories =
+            $$x(".//div[contains(@id,'react-select') and contains(@id,'-option')]");
     private final SelenideElement categoryInputEmptyListBox = categoryInputDropDown.$(byText("No options"));
     private final SelenideElement categoryFormLabel = categoryInput.ancestor(".form__label");
     private final SelenideElement categoryFormLabelError = categoryFormLabel.$x("span[@class='form__error']");
     private final SelenideElement amountInput = mainContentAddSpending.$x(".//input[@class='form__input ' and @name='amount']");
     private final SelenideElement amountFormLabel = amountInput.ancestor(".form__label");
-    private final SelenideElement spendDateInput = mainContentAddSpending.$(".react-datepicker__input-container");
+    private final SelenideElement spendDateInput = mainContentAddSpending
+            .$(".react-datepicker__input-container").lastChild();
     private final SelenideElement spendDateFormLabel = spendDateInput.ancestor(".form__label");
     private final SelenideElement descriptionInput = mainContentAddSpending.$(byAttribute("name", "description"));
     private final SelenideElement descriptionFormLabel = descriptionInput.ancestor(".form__label");
@@ -53,8 +67,8 @@ public class MainPage extends BasePage<MainPage> {
     private final SelenideElement spendingsControlHeaders = spendingsBulkActions.$(byText("Actions:"));
     private final SelenideElement spendingsDeleteSelectedButton = spendingsBulkActions.$(byText("Delete selected"));
     private final SelenideElement spendingsTable = spendingsContent.$(".spendings-table");
-    private final SelenideElement spendingsTableCheckBox = spendingsTable
-            .$(byAttribute("type", "checkbox"));
+    private final SelenideElement spendingsTableCheckBox = spendingsTable.$(byAttribute("type", "checkbox"));
+    private final ElementsCollection spendingsTableRows = $$(".spendings-table>tbody>tr");
     private final SelenideElement spendingsTableDate = spendingsTable
             .$(byText("Date"));
     private final SelenideElement spendingsTableAmount = spendingsTable
@@ -67,6 +81,9 @@ public class MainPage extends BasePage<MainPage> {
             .$(byText("Description"));
     private final SelenideElement spendingsTableEmptiness = spendingsContent
             .$(byText("No spendings provided yet!"));
+    private final SelenideElement spendingsUpdatedToastifyText =
+            $(byText("Spending successfully added!"));
+    private final SelenideElement spendingsDeletedToastifyText = $(byText("Spendings deleted"));
 
 
     public static final String MAIN_CONTENT_SECTION_TEXT = "Add new spending";
@@ -248,4 +265,88 @@ public class MainPage extends BasePage<MainPage> {
         );
         return this;
     }
+
+    public void checkNewSpendingCreated() {
+        categoryInput.click();
+        List<String> categories = getCategoriesList();
+        if (categories.size() > 0) {
+            Faker faker = new Faker();
+            int randomIndex = faker.number().numberBetween(0, categories.size() - 1);
+            String randomCategory = categories.get(randomIndex);
+            System.out.println(randomCategory);
+            SelenideElement randomCategoryElement =
+                    $x(".//div[contains(@id,'react-select') " +
+                            "and contains(@id,'-option-" + randomIndex + "')]");
+            randomCategoryElement.click();
+            String categoryInputOwnText = categoryFormLabel.getText();
+            int randomAmount = faker.number().numberBetween(1, 10000);
+            amountInput.setValue(String.valueOf(randomAmount));
+            String formatPattern = "dd/MM/yyyy";
+            DateFormat dateFormat = new SimpleDateFormat(formatPattern);
+            long dateStart = 643900206L;
+            long dateEnd = 2537356206L;
+            Date randomDate = new Date(faker.number().numberBetween(dateStart, dateEnd));
+            String randomFormattedDate = dateFormat.format(randomDate);
+            System.out.println(randomFormattedDate);
+            for (int i = 0; i < formatPattern.length(); i++) {
+                spendDateInput.press(Keys.BACK_SPACE);
+            }
+            spendDateInput.setValue(randomFormattedDate);
+            amountInput.click();
+            String randomDescription = faker.lordOfTheRings().character();
+            descriptionInput.setValue(randomDescription);
+            submitButton.click();
+            Toastify toastify = new Toastify();
+            toastify.checkThatComponentDisplayed();
+            spendingsUpdatedToastifyText.shouldBe(visible);
+            toastify.getToastifyCloseButton().click();
+
+            ElementsCollection cells = spendingsTableRows.last().$$("td");
+
+            cells.get(0)
+                    .$(byAttribute("type", "checkbox"))
+                    .scrollTo().shouldBe(visible);
+            String tableDateText = cells.get(1).$("span").getOwnText();
+            DateFormat tableDateFormat = new SimpleDateFormat("dd MMM yy", new Locale("en", "EN"));
+            String randomFormattedDateForTable = tableDateFormat.format(randomDate);
+            String tableAmount = cells.get(2).$("span").getOwnText();
+            String tableCurrency = cells.get(3).getOwnText();
+            String tableCategory = cells.get(4).$("span").getOwnText();
+            String tableDescription = cells.get(5).$("span").getOwnText();
+            cells.get(6).$(".button-icon_type_edit").scrollTo().shouldBe(visible);
+            ProfilePage profilePage = header.goToProfilePage();
+            String currencyFromProfile = profilePage.getCurrencyInput().getText();
+            assertAll(
+                    () -> assertTrue(categoryInputOwnText.contains(randomCategory)),
+                    () -> assertEquals(tableDateText, randomFormattedDateForTable),
+                    () -> assertEquals(tableAmount, String.valueOf(randomAmount)),
+                    () -> assertEquals(tableCategory, randomCategory),
+                    () -> assertEquals(tableDescription, randomDescription),
+                    () -> assertEquals(tableCurrency, currencyFromProfile)
+            );
+        }
+    }
+
+    public void deleteAllSpendings() {
+        if (spendingsTableRows.size() == 0) {
+            spendingsTableEmptiness.scrollTo().shouldBe(visible);
+            spendingsDeleteSelectedButton.shouldHave(attribute("disabled"));
+        } else {
+            spendingsTableCheckBox.scrollTo().click();
+            spendingsDeleteSelectedButton.click();
+            Toastify toastify = new Toastify();
+            toastify.checkThatComponentDisplayed();
+            spendingsDeletedToastifyText.shouldBe(visible);
+            spendingsTableEmptiness.shouldBe(visible);
+            refresh();
+            spendingsDeleteSelectedButton.shouldHave(attribute("disabled"));
+            assertEquals(0, spendingsTableRows.size());
+        }
+    }
+
+    public List<String> getCategoriesList() {
+        categoryInput.click();
+        return categoryInputListBoxCategories.texts();
+    }
+
 }

@@ -54,4 +54,9 @@ public class StartPage extends BasePage<StartPage> {
         registerButton.click();
         return new RegistrationPage();
     }
+
+    public LoginPage clickLoginButton() {
+        loginButton.click();
+        return new LoginPage();
+    }
 }
