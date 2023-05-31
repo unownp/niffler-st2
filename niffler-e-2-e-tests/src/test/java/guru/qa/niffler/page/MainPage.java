@@ -22,7 +22,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MainPage extends BasePage<MainPage> {
-
+    public static String URL = BASE_URL + ":" + FRONT_PORT + "/main";
     private final Header header = new Header();
     private final Footer footer = new Footer();
 

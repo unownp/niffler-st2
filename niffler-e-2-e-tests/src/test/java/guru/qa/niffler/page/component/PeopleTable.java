@@ -18,7 +18,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static guru.qa.niffler.page.BasePage.USERNAME;
+import static guru.qa.niffler.jupiter.extension.ApiLoginExtension.USERNAME;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PeopleTable extends BaseComponent<PeopleTable> {
@@ -88,13 +88,13 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
     }
 
     public int addRandomFriend() {
-        peopleTable.shouldBe(visible);
+        peopleTable.$("td").shouldBe(visible);
         List<UserJson> userJsonList = parseTable();
         if (userJsonList == null) {
             refresh();
             userJsonList = parseTable();
         }
-        peopleTable.shouldBe(visible);
+        peopleTable.$("td").shouldBe(visible);
         List<UserJson> noFriendList = userJsonList.stream().filter(u -> u.getFriendState() == null).toList();
         if (noFriendList.size() > 0) {
             Faker faker = new Faker();
@@ -106,7 +106,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
                 addButton.scrollTo();
             }
             addButton.click();
-            peopleTable.shouldBe(visible);
+            peopleTable.$("td").shouldBe(visible);
             userJsonList = parseTable();
             UserJson randomUserAfterSendingInvitation = userJsonList.stream()
                     .filter(u -> u.getUsername().equals(randomUserWithoutFriendship.getUsername())).toList().get(0);
@@ -117,7 +117,6 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
     }
 
     public List<UserJson> parseTable() {
-        peopleTable.shouldBe(visible);
         if (peopleTableRows.size() > 0) {
             List<UserJson> usernameList = new ArrayList<>();
             for (SelenideElement peopleTableRow : peopleTableRows) {
@@ -157,7 +156,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
     }
 
     public int confirmFriendRequest() {
-        peopleTable.shouldBe(visible);
+        peopleTable.$("td").shouldBe(visible);
         List<UserJson> userJsonList = parseTable();
         List<UserJson> requestFriendList = userJsonList.stream()
                 .filter(u -> u.getFriendState() == FriendState.INVITE_RECEIVED).toList();
@@ -174,7 +173,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
                 confirmButton.scrollTo();
             }
             confirmButton.click();
-
+            refresh();
             userJsonList = parseTable();
             System.out.println(userJsonList);
             UserJson randomUserAfterConfirmingInvitation = userJsonList.stream()
@@ -187,7 +186,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
     }
 
     public int declineFriendRequest(BasePage<?> basePage) {
-        peopleTable.shouldBe(visible);
+        peopleTable.$("td").shouldBe(visible);
         List<UserJson> userJsonList = parseTable();
         List<UserJson> requestFriendList = userJsonList.stream()
                 .filter(u -> u.getFriendState() == FriendState.INVITE_RECEIVED).toList();

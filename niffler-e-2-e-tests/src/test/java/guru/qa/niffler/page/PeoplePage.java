@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class PeoplePage extends BasePage<PeoplePage> {
-
+    public static String URL = BASE_URL + ":" + FRONT_PORT + "/people";
     private final Header header = new Header();
     private final PeopleTable peopleTable = new PeopleTable();
     private final Footer footer = new Footer();
