@@ -91,7 +91,6 @@ dependencies {
 }
 
 test {
-    workingDir "${rootDir}"
     options {
         systemProperties(System.getProperties())
     }

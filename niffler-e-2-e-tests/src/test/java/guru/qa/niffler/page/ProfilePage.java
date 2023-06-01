@@ -153,9 +153,8 @@ public class ProfilePage extends BasePage<ProfilePage> {
         avatarImage.click();
         closeEditAvatarButton.shouldBe(visible);
         editAvatarHeader.shouldBe(visible);
-        File file = new File("niffler-e-2-e-tests/src/test/resources/220x330.jpg");
         assertEquals(editAvatarHeader.getOwnText(), EDIT_AVATAR_HEADER_TEXT);
-        editAvatarInput.uploadFile(file);
+        editAvatarInput.uploadFromClasspath("220x330.jpg");
         submitButton.scrollTo().click();
         refresh();
         avatarImage.shouldBe(visible);
