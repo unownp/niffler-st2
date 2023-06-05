@@ -1,6 +1,7 @@
 package guru.qa.niffler.page;
 
 import com.codeborne.selenide.SelenideElement;
+import guru.qa.niffler.config.Config;
 import guru.qa.niffler.page.component.Footer;
 import guru.qa.niffler.page.component.Header;
 import guru.qa.niffler.page.component.PeopleTable;
@@ -13,7 +14,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 @Getter
 public class FriendsPage extends BasePage<FriendsPage> {
-
+    public static String URL = BASE_URL + ":" + FRONT_PORT + Config.getConfig().getFriendsPath();
     private final Header header = new Header();
     private final PeopleTable peopleTable = new PeopleTable();
     private final Footer footer = new Footer();
@@ -31,9 +32,9 @@ public class FriendsPage extends BasePage<FriendsPage> {
         return this;
     }
 
-    public void confirmFriendRequest() {
+    public void confirmFriendRequest(String username) {
         if (header.getFriendRedPoint().is(visible)) {
-            int usersWithRequestSize = peopleTable.confirmFriendRequest();
+            int usersWithRequestSize = peopleTable.confirmFriendRequest(username);
             if (usersWithRequestSize > 0) {
                 Toastify toastify = new Toastify();
                 toastify.checkThatComponentDisplayed();
@@ -43,9 +44,9 @@ public class FriendsPage extends BasePage<FriendsPage> {
         }
     }
 
-    public void declineFriendRequest() {
+    public void declineFriendRequest(String username) {
         if (header.getFriendRedPoint().is(visible)) {
-            int usersWithRequestSize = peopleTable.declineFriendRequest(this);
+            int usersWithRequestSize = peopleTable.declineFriendRequest(this, username);
             if (usersWithRequestSize > 0) {
                 Toastify toastify = new Toastify();
                 toastify.checkThatComponentDisplayed();

@@ -46,4 +46,6 @@ public interface Config {
     int getUserDataPort();
 
     String getCurrentUserPath();
+
+    String getFriendsPath();
 }

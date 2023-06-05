@@ -96,4 +96,9 @@ public class LocalConfig implements Config {
   public String getCurrentUserPath() {
     return "/currentUser";
   }
+
+  @Override
+  public String getFriendsPath() {
+    return "/friends";
+  }
 }

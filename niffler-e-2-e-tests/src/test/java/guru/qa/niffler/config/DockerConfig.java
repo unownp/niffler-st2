@@ -96,4 +96,9 @@ public class DockerConfig implements Config {
   public String getCurrentUserPath() {
     return null;
   }
+
+  @Override
+  public String getFriendsPath() {
+    return null;
+  }
 }

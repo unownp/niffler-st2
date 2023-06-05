@@ -19,7 +19,6 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static guru.qa.niffler.jupiter.extension.ApiLoginExtension.USERNAME;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Getter
@@ -51,23 +50,15 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
         peopleTableUsername.shouldBe(visible);
         peopleTableName.shouldBe(visible);
         peopleTableActions.shouldBe(visible);
-        if (peopleTableRows.size() > 0) {
-            List<String> usernameList = new ArrayList<>();
-            for (SelenideElement peopleTableRow : peopleTableRows) {
-                ElementsCollection cells = peopleTableRow.$$("td");
-                usernameList.add(cells.get(1).getText());
-            }
-            assertFalse(usernameList.contains(USERNAME));
-        }
         return this;
     }
 
-    public int addRandomFriend() {
+    public int addRandomFriend(String username) {
         peopleTable.$("td").shouldBe(visible);
-        List<UserJson> userJsonList = parseTable();
+        List<UserJson> userJsonList = parseTable(username);
         if (userJsonList == null) {
             refresh();
-            userJsonList = parseTable();
+            userJsonList = parseTable(username);
         }
         peopleTable.$("td").shouldBe(visible);
         List<UserJson> noFriendList = userJsonList.stream().filter(u -> u.getFriendState() == null).toList();
@@ -82,7 +73,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
             }
             addButton.click();
             peopleTable.$("td").shouldBe(visible);
-            userJsonList = parseTable();
+            userJsonList = parseTable(username);
             UserJson randomUserAfterSendingInvitation = userJsonList.stream()
                     .filter(u -> u.getUsername().equals(randomUserWithoutFriendship.getUsername())).toList().get(0);
             assertEquals(randomUserAfterSendingInvitation
@@ -91,7 +82,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
         return noFriendList.size();
     }
 
-    public List<UserJson> parseTable() {
+    public List<UserJson> parseTable(String username) {
         if (peopleTableRows.size() > 0) {
             List<UserJson> usernameList = new ArrayList<>();
             for (SelenideElement peopleTableRow : peopleTableRows) {
@@ -124,15 +115,15 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
                 }
                 usernameList.add(user);
             }
-            assertFalse(usernameList.stream().map(UserJson::getUsername).toList().contains(USERNAME));
+            assertFalse(usernameList.stream().map(UserJson::getUsername).toList().contains(username));
             return usernameList;
         }
         return null;
     }
 
-    public int confirmFriendRequest() {
+    public int confirmFriendRequest(String username) {
         peopleTable.$("td").shouldBe(visible);
-        List<UserJson> userJsonList = parseTable();
+        List<UserJson> userJsonList = parseTable(username);
         List<UserJson> requestFriendList = userJsonList.stream()
                 .filter(u -> u.getFriendState() == FriendState.INVITE_RECEIVED).toList();
         System.out.println(requestFriendList);
@@ -149,7 +140,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
             }
             confirmButton.click();
             refresh();
-            userJsonList = parseTable();
+            userJsonList = parseTable(username);
             System.out.println(userJsonList);
             UserJson randomUserAfterConfirmingInvitation = userJsonList.stream()
                     .filter(u -> u.getUsername().equals(randomUserWithRequest.getUsername())).toList().get(0);
@@ -160,9 +151,9 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
         return requestFriendList.size();
     }
 
-    public int declineFriendRequest(BasePage<?> basePage) {
+    public int declineFriendRequest(BasePage<?> basePage,String username) {
         peopleTable.$("td").shouldBe(visible);
-        List<UserJson> userJsonList = parseTable();
+        List<UserJson> userJsonList = parseTable(username);
         List<UserJson> requestFriendList = userJsonList.stream()
                 .filter(u -> u.getFriendState() == FriendState.INVITE_RECEIVED).toList();
         System.out.println(requestFriendList);
@@ -180,7 +171,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
             }
             declineButton.click();
 
-            userJsonList = parseTable();
+            userJsonList = parseTable(username);
             System.out.println(userJsonList);
             if (basePage instanceof PeoplePage) {
                 UserJson randomUserAfterConfirmingInvitation = userJsonList.stream()
@@ -189,7 +180,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
                 assertNull(randomUserAfterConfirmingInvitation
                         .getFriendState());
             } else if (basePage instanceof FriendsPage) {
-                List<String> userNamesListAfterDeclining = parseTable().stream().map(UserJson::getUsername).toList();
+                List<String> userNamesListAfterDeclining = parseTable(username).stream().map(UserJson::getUsername).toList();
                 System.out.println(userNamesListAfterDeclining);
                 assertFalse(userNamesListAfterDeclining.contains(randomUserWithRequest.getUsername()));
             }

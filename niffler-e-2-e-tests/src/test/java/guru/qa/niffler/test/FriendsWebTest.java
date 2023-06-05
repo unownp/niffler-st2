@@ -2,12 +2,10 @@ package guru.qa.niffler.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import guru.qa.niffler.jupiter.annotation.ApiLogin;
 import guru.qa.niffler.jupiter.annotation.User;
 import guru.qa.niffler.model.UserJson;
 import guru.qa.niffler.page.FriendsPage;
-import guru.qa.niffler.page.LoginPage;
-import guru.qa.niffler.page.MainPage;
-import guru.qa.niffler.page.StartPage;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureId;
 import org.junit.jupiter.api.Disabled;
@@ -52,28 +50,18 @@ public class FriendsWebTest extends BaseWebTest {
     }
 
     @Test
-    void confirmFriendRequest() {
-        StartPage startPage = Selenide.open(StartPage.URL, StartPage.class);
-        startPage.checkThatPageLoaded();
-        LoginPage loginPage = startPage.clickLoginButton();
-        loginPage.checkThatPageLoaded();
-        MainPage mainPage = loginPage.signIn();
-        mainPage.checkThatPageLoaded();
-        FriendsPage friendsPage = mainPage.getHeader().goToFriendsPage();
+    @ApiLogin(username = "GEESECATCHER", password = "12345")
+    void confirmFriendRequest(String username) {
+        FriendsPage friendsPage = Selenide.open(FriendsPage.URL, FriendsPage.class);
         friendsPage.checkThatPageLoaded();
-        friendsPage.confirmFriendRequest();
+        friendsPage.confirmFriendRequest(username);
     }
 
     @Test
-    void declineFriendRequest() {
-        StartPage startPage = Selenide.open(StartPage.URL, StartPage.class);
-        startPage.checkThatPageLoaded();
-        LoginPage loginPage = startPage.clickLoginButton();
-        loginPage.checkThatPageLoaded();
-        MainPage mainPage = loginPage.signIn();
-        mainPage.checkThatPageLoaded();
-        FriendsPage friendsPage = mainPage.getHeader().goToFriendsPage();
+    @ApiLogin(username = "GEESECATCHER", password = "12345")
+    void declineFriendRequest(String username) {
+        FriendsPage friendsPage = Selenide.open(FriendsPage.URL, FriendsPage.class);
         friendsPage.checkThatPageLoaded();
-        friendsPage.declineFriendRequest();
+        friendsPage.declineFriendRequest(username);
     }
 }

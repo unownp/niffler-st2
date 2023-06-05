@@ -36,8 +36,8 @@ public class PeoplePage extends BasePage<PeoplePage> {
         return this;
     }
 
-    public void addNewFriend() {
-        int noFriendSize = peopleTable.addRandomFriend();
+    public void addNewFriend(String username) {
+        int noFriendSize = peopleTable.addRandomFriend(username);
         if (noFriendSize > 0) {
             Toastify toastify = new Toastify();
             toastify.checkThatComponentDisplayed();
@@ -46,9 +46,9 @@ public class PeoplePage extends BasePage<PeoplePage> {
         }
     }
 
-    public void confirmFriendRequest() {
+    public void confirmFriendRequest(String username) {
         if (header.getFriendRedPoint().is(visible)) {
-            int usersWithRequestSize = peopleTable.confirmFriendRequest();
+            int usersWithRequestSize = peopleTable.confirmFriendRequest(username);
             if (usersWithRequestSize > 0) {
                 Toastify toastify = new Toastify();
                 toastify.checkThatComponentDisplayed();
@@ -58,9 +58,9 @@ public class PeoplePage extends BasePage<PeoplePage> {
         }
     }
 
-    public void declineFriendRequest() {
+    public void declineFriendRequest(String username) {
         if (header.getFriendRedPoint().is(visible)) {
-            int usersWithRequestSize = peopleTable.declineFriendRequest(this);
+            int usersWithRequestSize = peopleTable.declineFriendRequest(this,username);
             if (usersWithRequestSize > 0) {
                 Toastify toastify = new Toastify();
                 toastify.checkThatComponentDisplayed();
