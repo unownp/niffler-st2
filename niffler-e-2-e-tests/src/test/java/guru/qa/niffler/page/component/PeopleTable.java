@@ -9,6 +9,7 @@ import guru.qa.niffler.page.BaseComponent;
 import guru.qa.niffler.page.BasePage;
 import guru.qa.niffler.page.FriendsPage;
 import guru.qa.niffler.page.PeoplePage;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,34 +22,8 @@ import static com.codeborne.selenide.Selenide.*;
 import static guru.qa.niffler.jupiter.extension.ApiLoginExtension.USERNAME;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Getter
 public class PeopleTable extends BaseComponent<PeopleTable> {
-    public SelenideElement getPeopleTable() {
-        return peopleTable;
-    }
-
-    public SelenideElement getPeopleTableAvatar() {
-        return peopleTableAvatar;
-    }
-
-    public SelenideElement getPeopleTableUsername() {
-        return peopleTableUsername;
-    }
-
-    public SelenideElement getPeopleTableName() {
-        return peopleTableName;
-    }
-
-    public SelenideElement getPeopleTableActions() {
-        return peopleTableActions;
-    }
-
-    public ElementsCollection getPeople() {
-        return people;
-    }
-
-    public SelenideElement getPeopleFriendButton() {
-        return peopleFriendButton;
-    }
 
     private final SelenideElement peopleTable = $(".main-content__section").$(".table");
     private final SelenideElement peopleTableAvatar = peopleTable
@@ -132,11 +107,11 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
                     user.setSurname(namePlusSurname.get(1));
                 }
                 //TODO(Think about logic)
-                else if (namePlusSurname.size() == 1) {
-                    if (namePlusSurname.get(0).length() > 0) {
-
-                    }
-                }
+//                else if (namePlusSurname.size() == 1) {
+//                    if (namePlusSurname.get(0).length() > 0) {
+//
+//                    }
+//                }
 
                 //INVITE_SENT, INVITE_RECEIVED, FRIEND
                 if (cells.get(3).getText().contains("You are friends")) {

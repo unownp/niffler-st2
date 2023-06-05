@@ -15,17 +15,35 @@ public interface Config {
 
     String getDBPassword();
 
-    String getSpendUrl();
-
     int getDBPort();
-
-    String getFrontUrl();
-
-    String getAuthUrl();
 
     String getBaseUrl();
 
-    String getOauth2Port();
+    int getOauth2Port();
 
-    String getFrontPort();
+    int getFrontPort();
+
+    String getRegisterPath();
+
+    int getSpendPort();
+
+    String getOauthPath();
+
+    String getAuthorizePath();
+
+    String getAuthorizedPath();
+
+    String getLoginPath();
+
+    String getTokenPath();
+
+    String getMainPath();
+
+    String getPeoplePath();
+
+    String getRedirectPath();
+
+    int getUserDataPort();
+
+    String getCurrentUserPath();
 }

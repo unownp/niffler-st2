@@ -1,6 +1,8 @@
 package guru.qa.niffler.page;
 
 import com.codeborne.selenide.SelenideElement;
+import guru.qa.niffler.config.Config;
+import lombok.Getter;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -9,9 +11,9 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Getter
 public class RegistrationPage extends BasePage<RegistrationPage> {
-    //public static final String URL = Config.getConfig().getAuthUrl() + "/register";
-    public static final String URL = BASE_URL + ":" + OAUTH2_PORT + "/register";
+    public static final String URL = BASE_URL + ":" + OAUTH2_PORT + Config.getConfig().getRegisterPath();
 
     private final SelenideElement formHeader = $(".form__header");
     private final SelenideElement nifflerLogo = $(byAttribute("alt", "Niffler logo"));
@@ -61,9 +63,8 @@ public class RegistrationPage extends BasePage<RegistrationPage> {
         return this;
     }
 
-    public RegistrationPage checkErrorMessage(String expectedMessage) {
+    public void checkErrorMessage(String expectedMessage) {
         $(".form__error").shouldHave(text(expectedMessage));
-        return this;
     }
 
     public LoginPage clickSignInHyperLink() {

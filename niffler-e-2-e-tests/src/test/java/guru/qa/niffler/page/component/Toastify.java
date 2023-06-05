@@ -10,6 +10,7 @@ public class Toastify extends BaseComponent<Toastify> {
     public Toastify() {
         super($(".main-content__section").$(".table"));
     }
+
     private final SelenideElement toastifyCloseButton = $(".Toastify__close-button");
 
     public SelenideElement getToastifyCloseButton() {

@@ -1,31 +1,22 @@
 package guru.qa.niffler.test;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
+import static guru.qa.niffler.condition.SpendCondition.newSpendIsVisible;
 
 import com.codeborne.selenide.CollectionCondition;
-import com.codeborne.selenide.Selenide;
+import guru.qa.niffler.jupiter.annotation.ApiLogin;
 import guru.qa.niffler.jupiter.annotation.GenerateSpend;
+import guru.qa.niffler.jupiter.annotation.GenerateUser;
 import guru.qa.niffler.model.CurrencyValues;
 import guru.qa.niffler.model.SpendJson;
+import guru.qa.niffler.model.UserJson;
+import guru.qa.niffler.page.MainPage;
 import io.qameta.allure.AllureId;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-@Disabled
 public class SpendsWebTest extends BaseWebTest {
-
-    @BeforeEach
-    void doLogin() {
-        Selenide.open("http://127.0.0.1:3000/main");
-        $("a[href*='redirect']").click();
-        $("input[name='username']").setValue("dima");
-        $("input[name='password']").setValue("12345");
-        $("button[type='submit']").click();
-    }
-
+    @Disabled
     @GenerateSpend(
         username = "dima",
         description = "QA GURU ADVANCED VOL 2",
@@ -49,5 +40,28 @@ public class SpendsWebTest extends BaseWebTest {
             .$$("tr")
             .shouldHave(CollectionCondition.size(0));
         throw new IllegalStateException();
+    }
+
+    @GenerateSpend(
+            username = "ELGATO",
+            description = "someDescription",
+            currency = CurrencyValues.RUB,
+            amount = 52000.00,
+            category = "Electrode"
+    )
+    @ApiLogin(username = "ELGATO", password = "12345")
+    @AllureId("101")
+    @Test
+    void spendInTableShouldBeEqualToGiven(SpendJson spend) {
+        refresh();
+        MainPage mainPage=new MainPage();
+        mainPage.checkThatPageLoaded();
+        mainPage.getSpendingsTableRows().shouldHave(newSpendIsVisible(spend));
+    }
+
+    @Test
+    @GenerateUser
+    void test(UserJson userJson){
+        System.out.println(userJson);
     }
 }

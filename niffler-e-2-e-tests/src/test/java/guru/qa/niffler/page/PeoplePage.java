@@ -1,18 +1,21 @@
 package guru.qa.niffler.page;
 
 import com.codeborne.selenide.SelenideElement;
+import guru.qa.niffler.config.Config;
 import guru.qa.niffler.page.component.Footer;
 import guru.qa.niffler.page.component.Header;
 import guru.qa.niffler.page.component.PeopleTable;
 import guru.qa.niffler.page.component.Toastify;
+import lombok.Getter;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
+@Getter
 public class PeoplePage extends BasePage<PeoplePage> {
-    public static String URL = BASE_URL + ":" + FRONT_PORT + "/people";
+    public static String URL = BASE_URL + ":" + FRONT_PORT + Config.getConfig().getPeoplePath();
     private final Header header = new Header();
     private final PeopleTable peopleTable = new PeopleTable();
     private final Footer footer = new Footer();
@@ -24,18 +27,6 @@ public class PeoplePage extends BasePage<PeoplePage> {
             $(byText("Invitation is accepted!"));
     private final SelenideElement friendshipIsDeclinedToastifyText =
             $(byText("Invitation is declined!"));
-
-    public PeopleTable getPeopleTable() {
-        return peopleTable;
-    }
-
-    public Footer getFooter() {
-        return footer;
-    }
-
-    public Header getHeader() {
-        return header;
-    }
 
     @Override
     public PeoplePage checkThatPageLoaded() {

@@ -5,11 +5,13 @@ import guru.qa.niffler.page.component.Footer;
 import guru.qa.niffler.page.component.Header;
 import guru.qa.niffler.page.component.PeopleTable;
 import guru.qa.niffler.page.component.Toastify;
+import lombok.Getter;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
+@Getter
 public class FriendsPage extends BasePage<FriendsPage> {
 
     private final Header header = new Header();
@@ -19,19 +21,6 @@ public class FriendsPage extends BasePage<FriendsPage> {
             $(byText("Invitation is accepted!"));
     private final SelenideElement friendshipIsDeclinedToastifyText =
             $(byText("Invitation is declined!"));
-
-    public PeopleTable getPeopleTable() {
-        return peopleTable;
-    }
-
-    public Footer getFooter() {
-        return footer;
-    }
-
-    public Header getHeader() {
-        return header;
-    }
-
 
     @Override
     public FriendsPage checkThatPageLoaded() {

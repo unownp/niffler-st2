@@ -6,8 +6,8 @@ import com.github.javafaker.Faker;
 import guru.qa.niffler.page.component.Footer;
 import guru.qa.niffler.page.component.Header;
 import guru.qa.niffler.page.component.Toastify;
+import lombok.Getter;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +21,7 @@ import static com.codeborne.selenide.Selenide.refresh;
 import static java.util.Comparator.naturalOrder;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Getter
 public class ProfilePage extends BasePage<ProfilePage> {
     private final Header header = new Header();
     private final Footer footer = new Footer();
@@ -102,10 +103,6 @@ public class ProfilePage extends BasePage<ProfilePage> {
         return this;
     }
 
-    public Header getHeader() {
-        return header;
-    }
-
     public void checkUpdateProfile() {
         Faker faker = new Faker();
         String name = faker.name().firstName();
@@ -160,11 +157,4 @@ public class ProfilePage extends BasePage<ProfilePage> {
         avatarImage.shouldBe(visible);
     }
 
-    public ElementsCollection getCategoriesList() {
-        return categoriesList;
-    }
-
-    public SelenideElement getCurrencyInput() {
-        return currencyInput;
-    }
 }

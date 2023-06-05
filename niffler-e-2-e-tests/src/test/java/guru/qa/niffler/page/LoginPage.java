@@ -1,6 +1,8 @@
 package guru.qa.niffler.page;
 
 import com.codeborne.selenide.SelenideElement;
+import guru.qa.niffler.config.Config;
+import lombok.Getter;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byAttribute;
@@ -9,8 +11,9 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Getter
 public class LoginPage extends BasePage<LoginPage> {
-    public static final String URL = BASE_URL + ":" + OAUTH2_PORT + "/login";
+    public static final String URL = BASE_URL + ":" + OAUTH2_PORT + Config.getConfig().getLoginPath();
     private final SelenideElement formHeader = $(".form__header");
     private final SelenideElement nifflerLogo = $(byAttribute("alt", "Niffler logo"));
     private final SelenideElement signInFormParagraph = $(byText("Please sign in"));
@@ -28,50 +31,6 @@ public class LoginPage extends BasePage<LoginPage> {
     public static final String USER_NAME_FORM_LABEL_TEXT = "Username:";
     public static final String PASSWORD_FORM_LABEL_TEXT = "Password:";
     public static final String SIGN_UP_FORM_PARAGRAPH_TEXT = "Have no account?";
-
-    public SelenideElement getFormHeader() {
-        return formHeader;
-    }
-
-    public SelenideElement getNifflerLogo() {
-        return nifflerLogo;
-    }
-
-    public SelenideElement getSignInFormParagraph() {
-        return signInFormParagraph;
-    }
-
-    public SelenideElement getUserNameInput() {
-        return userNameInput;
-    }
-
-    public SelenideElement getUserNameFormLabel() {
-        return userNameFormLabel;
-    }
-
-    public SelenideElement getPasswordInput() {
-        return passwordInput;
-    }
-
-    public SelenideElement getPasswordFormLabel() {
-        return passwordFormLabel;
-    }
-
-    public SelenideElement getFormPasswordButton() {
-        return formPasswordButton;
-    }
-
-    public SelenideElement getSignInButton() {
-        return signInButton;
-    }
-
-    public SelenideElement getSignUpFormParagraph() {
-        return signUpFormParagraph;
-    }
-
-    public SelenideElement getSignUpHyperLink() {
-        return signUpHyperLink;
-    }
 
     @Override
     public LoginPage checkThatPageLoaded() {

@@ -3,12 +3,15 @@ package guru.qa.niffler.page;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.github.javafaker.Faker;
+import guru.qa.niffler.config.Config;
 import guru.qa.niffler.page.component.Footer;
 import guru.qa.niffler.page.component.Header;
 import guru.qa.niffler.page.component.Toastify;
+import lombok.Getter;
 import org.openqa.selenium.Keys;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +24,9 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Getter
 public class MainPage extends BasePage<MainPage> {
-    public static String URL = BASE_URL + ":" + FRONT_PORT + "/main";
+    public static String URL = BASE_URL + ":" + FRONT_PORT + Config.getConfig().getMainPath();
     private final Header header = new Header();
     private final Footer footer = new Footer();
 
@@ -99,131 +103,6 @@ public class MainPage extends BasePage<MainPage> {
     public static final String MAIN_CONTENT_HISTORY_NAME_TEXT = "History of spendings";
     public static final String SPENDING_CONTROLS_TEXT = "\"All the limits are in your head\"";
     public static final String SPENDING_CONTROLS_HEADER_TEXT = "Filters:";
-
-
-    public Header getHeader() {
-        return header;
-    }
-
-    public Footer getFooter() {
-        return footer;
-    }
-
-    public SelenideElement getMainContentAddSpending() {
-        return mainContentAddSpending;
-    }
-
-    public SelenideElement getCategoryInput() {
-        return categoryInput;
-    }
-
-    public SelenideElement getCategoryInputDropDown() {
-        return categoryInputDropDown;
-    }
-
-    public SelenideElement getCategoryInputEmptyListBox() {
-        return categoryInputEmptyListBox;
-    }
-
-    public SelenideElement getCategoryFormLabel() {
-        return categoryFormLabel;
-    }
-
-    public SelenideElement getCategoryFormLabelError() {
-        return categoryFormLabelError;
-    }
-
-    public SelenideElement getSubmitButton() {
-        return submitButton;
-    }
-
-    public SelenideElement getAmountInput() {
-        return amountInput;
-    }
-
-    public SelenideElement getAmountFormLabel() {
-        return amountFormLabel;
-    }
-
-    public SelenideElement getSpendDateInput() {
-        return spendDateInput;
-    }
-
-    public SelenideElement getSpendDateFormLabel() {
-        return spendDateFormLabel;
-    }
-
-    public SelenideElement getDescriptionInput() {
-        return descriptionInput;
-    }
-
-    public SelenideElement getDescriptionFormLabel() {
-        return descriptionFormLabel;
-    }
-
-    public SelenideElement getMainContentSection() {
-        return mainContentSection;
-    }
-
-    public SelenideElement getMainContentStats() {
-        return mainContentStats;
-    }
-
-    public SelenideElement getMainContentHistory() {
-        return mainContentHistory;
-    }
-
-    public SelenideElement getMainContentHistoryName() {
-        return mainContentHistoryName;
-    }
-
-    public SelenideElement getMainContentHistoryImage() {
-        return mainContentHistoryImage;
-    }
-
-    public SelenideElement getSpendingsContent() {
-        return spendingsContent;
-    }
-
-    public SelenideElement getSpendingsControls() {
-        return spendingsControls;
-    }
-
-    public SelenideElement getSpendingsButtons() {
-        return spendingsButtons;
-    }
-
-    public SelenideElement getSpendingsControlsHeader() {
-        return spendingsControlsHeader;
-    }
-
-    public SelenideElement getSpendingsButtonToday() {
-        return spendingsButtonToday;
-    }
-
-    public SelenideElement getSpendingsButtonLastWeek() {
-        return spendingsButtonLastWeek;
-    }
-
-    public SelenideElement getSpendingsButtonLastMonth() {
-        return spendingsButtonLastMonth;
-    }
-
-    public SelenideElement getSpendingsButtonAllTime() {
-        return spendingsButtonAllTime;
-    }
-
-    public SelenideElement getSpendingsCurrencyButton() {
-        return spendingsCurrencyButton;
-    }
-
-    public SelenideElement getSpendingsCurrencyVariations() {
-        return spendingsCurrencyVariations;
-    }
-
-    public SelenideElement getSpendingsCurrencyVariationsAllButton() {
-        return spendingsCurrencyVariationsAllButton;
-    }
 
     @Override
     public MainPage checkThatPageLoaded() {
@@ -349,4 +228,8 @@ public class MainPage extends BasePage<MainPage> {
         return categoryInputListBoxCategories.texts();
     }
 
+    public static Date getDateFromTable(String dateFromTableText) throws ParseException {
+        DateFormat tableDateFormat = new SimpleDateFormat("dd MMM yy", new Locale("en", "EN"));
+        return tableDateFormat.parse(dateFromTableText);
+    }
 }

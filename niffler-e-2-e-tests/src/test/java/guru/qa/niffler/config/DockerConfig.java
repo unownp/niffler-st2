@@ -18,23 +18,8 @@ public class DockerConfig implements Config {
   }
 
   @Override
-  public String getSpendUrl() {
-    return "niffler-spend";
-  }
-
-  @Override
   public int getDBPort() {
     return 5432;
-  }
-
-  @Override
-  public String getFrontUrl() {
-    return "http://niffler-fronend:3000/";
-  }
-
-  @Override
-  public String getAuthUrl() {
-    return "http://niffler-auth:9000/";
   }
 
   @Override
@@ -43,12 +28,72 @@ public class DockerConfig implements Config {
   }
 
   @Override
-  public String getOauth2Port() {
+  public int getOauth2Port() {
+    return 0;
+  }
+
+  @Override
+  public int getFrontPort() {
+    return 0;
+  }
+
+  @Override
+  public String getRegisterPath() {
     return null;
   }
 
   @Override
-  public String getFrontPort() {
+  public int getSpendPort() {
+    return 0;
+  }
+
+  @Override
+  public String getOauthPath() {
+    return null;
+  }
+
+  @Override
+  public String getAuthorizePath() {
+    return null;
+  }
+
+  @Override
+  public String getAuthorizedPath() {
+    return null;
+  }
+
+  @Override
+  public String getLoginPath() {
+    return null;
+  }
+
+  @Override
+  public String getTokenPath() {
+    return null;
+  }
+
+  @Override
+  public String getMainPath() {
+    return null;
+  }
+
+  @Override
+  public String getPeoplePath() {
+    return null;
+  }
+
+  @Override
+  public String getRedirectPath() {
+    return null;
+  }
+
+  @Override
+  public int getUserDataPort() {
+    return 0;
+  }
+
+  @Override
+  public String getCurrentUserPath() {
     return null;
   }
 }
