@@ -2,12 +2,7 @@ package guru.qa.niffler.service;
 
 
 import com.google.protobuf.Empty;
-import guru.qa.grpc.niffler.grpc.CalculateRequest;
-import guru.qa.grpc.niffler.grpc.CalculateResponse;
-import guru.qa.grpc.niffler.grpc.Currency;
-import guru.qa.grpc.niffler.grpc.CurrencyResponse;
-import guru.qa.grpc.niffler.grpc.CurrencyValues;
-import guru.qa.grpc.niffler.grpc.NifflerCurrencyServiceGrpc;
+import guru.qa.grpc.niffler.grpc.*;
 import guru.qa.niffler.data.CurrencyEntity;
 import guru.qa.niffler.data.repository.CurrencyRepository;
 import io.grpc.stub.StreamObserver;
@@ -60,7 +55,7 @@ public class GrpcCurrencyService extends NifflerCurrencyServiceGrpc.NifflerCurre
         responseObserver.onCompleted();
     }
 
-    private @Nonnull
+    @Nonnull
     BigDecimal convertSpendTo(double spend,
                               @Nonnull CurrencyValues spendCurrency,
                               @Nonnull CurrencyValues desiredCurrency,
@@ -72,7 +67,7 @@ public class GrpcCurrencyService extends NifflerCurrencyServiceGrpc.NifflerCurre
         return spendInUsd.divide(courseForCurrency(desiredCurrency, currencyRates), 2, RoundingMode.HALF_UP);
     }
 
-    private @Nonnull
+    @Nonnull
     BigDecimal courseForCurrency(@Nonnull CurrencyValues currency,
                                  @Nonnull List<CurrencyEntity> currencyRates) {
         return BigDecimal.valueOf(
