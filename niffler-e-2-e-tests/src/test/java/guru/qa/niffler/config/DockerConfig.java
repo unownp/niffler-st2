@@ -101,4 +101,9 @@ public class DockerConfig implements Config {
   public String getFriendsPath() {
     return null;
   }
+
+  @Override
+  public int getCurrencyGrpcPort() {
+    return 0;
+  }
 }

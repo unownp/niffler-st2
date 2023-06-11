@@ -1,9 +1,9 @@
-package guru.qa.niffler.test;
+package guru.qa.niffler.test.web;
 
 import com.codeborne.selenide.Selenide;
 import com.github.javafaker.Faker;
-import guru.qa.niffler.db.dao.NifflerUsersDAO;
-import guru.qa.niffler.db.dao.NifflerUsersDAOHibernate;
+import guru.qa.niffler.db.dao.users.NifflerUsersDAO;
+import guru.qa.niffler.db.dao.users.NifflerUsersDAOHibernate;
 import guru.qa.niffler.db.entity.Authority;
 import guru.qa.niffler.db.entity.AuthorityEntity;
 import guru.qa.niffler.db.entity.UserEntity;
@@ -23,8 +23,8 @@ import static com.codeborne.selenide.Selenide.$;
 @Disabled
 public class LoginNewUserTest extends BaseWebTest {
 
-    private static Faker faker = new Faker();
-    private NifflerUsersDAO usersDAO = new NifflerUsersDAOHibernate();
+    private static final Faker faker = new Faker();
+    private final NifflerUsersDAO usersDAO = new NifflerUsersDAOHibernate();
     private UserEntity ue;
 
     private static final String TEST_PWD = "12345";
@@ -55,7 +55,7 @@ public class LoginNewUserTest extends BaseWebTest {
     }
 
     @Test
-    void loginTest() throws IOException {
+    void loginTest() {
         Allure.step("open page", () -> Selenide.open("http://127.0.0.1:3000/main"));
         $("a[href*='redirect']").click();
         $("input[name='username']").setValue(ue.getUsername());

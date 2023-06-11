@@ -48,4 +48,6 @@ public interface Config {
     String getCurrentUserPath();
 
     String getFriendsPath();
+
+    int getCurrencyGrpcPort();
 }

@@ -1,4 +1,4 @@
-package guru.qa.niffler.db.dao;
+package guru.qa.niffler.db.dao.users;
 
 import guru.qa.niffler.db.DataSourceProvider;
 import guru.qa.niffler.db.ServiceDB;
@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.support.JdbcTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.Objects;
 
 public class NifflerUsersDAOSpringJdbc implements NifflerUsersDAO {
 
@@ -17,7 +19,7 @@ public class NifflerUsersDAOSpringJdbc implements NifflerUsersDAO {
     DataSourceTransactionManager transactionManager = new JdbcTransactionManager(
         DataSourceProvider.INSTANCE.getDataSource(ServiceDB.NIFFLER_AUTH));
     this.transactionTemplate = new TransactionTemplate(transactionManager);
-    this.jdbcTemplate = new JdbcTemplate(transactionManager.getDataSource());
+    this.jdbcTemplate = new JdbcTemplate(Objects.requireNonNull(transactionManager.getDataSource()));
   }
 
   @Override
