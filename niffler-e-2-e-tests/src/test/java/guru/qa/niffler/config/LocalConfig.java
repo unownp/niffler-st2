@@ -1,6 +1,18 @@
 package guru.qa.niffler.config;
 
+import com.codeborne.selenide.Configuration;
+
 public class LocalConfig implements Config {
+    static final LocalConfig INSTANCE = new LocalConfig();
+
+    static {
+        Configuration.browser = "chrome";
+        Configuration.browserSize = "1920x1080";
+    }
+
+    private LocalConfig() {
+    }
+
 
     @Override
     public String getDBHost() {
@@ -23,12 +35,12 @@ public class LocalConfig implements Config {
     }
 
     @Override
-  //  public String getBaseUrl() {
-//        return "http://127.0.0.1";
-//    }
     public String getBaseUrl() {
-        return "localhost";
+        return "http://127.0.0.1";
     }
+//    public String getBaseUrl() {
+//        return "localhost";
+//    }
 
     @Override
     public int getOauth2Port() {
@@ -108,5 +120,45 @@ public class LocalConfig implements Config {
     @Override
     public int getCurrencyGrpcPort() {
         return 8092;
+    }
+
+    @Override
+    public String getSpendPath() {
+        return "/spends";
+    }
+
+    @Override
+    public String getFrontPath() {
+        return null;
+    }
+
+    @Override
+    public String getAuthPath() {
+        return null;
+    }
+
+    @Override
+    public String getCurrencyGrpcPath() {
+        return null;
+    }
+
+    @Override
+    public int getCurrencyPort() {
+        return 0;
+    }
+
+    @Override
+    public String getInvitationsPath() {
+        return "/invitations";
+    }
+
+    @Override
+    public String getCategoriesPath() {
+        return "/categories";
+    }
+
+    @Override
+    public String getStatisticPath() {
+        return "/statistic";
     }
 }

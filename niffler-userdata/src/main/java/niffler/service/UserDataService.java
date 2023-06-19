@@ -175,9 +175,9 @@ public class UserDataService {
     List<UserJson> removeFriend(@Nonnull String username, @Nonnull String friendUsername) {
         UserEntity currentUser = userRepository.findByUsername(username);
         UserEntity friendToRemove = userRepository.findByUsername(friendUsername);
-        currentUser.removeFriends(friendToRemove);
-        currentUser.removeInvites(friendToRemove);
-        userRepository.save(currentUser);
+        friendToRemove.removeFriends(currentUser);
+        friendToRemove.removeInvites(currentUser);
+        userRepository.save(friendToRemove);
         return currentUser
                 .getFriends()
                 .stream()

@@ -9,6 +9,7 @@ import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
 import io.qameta.allure.grpc.AllureGrpc;
 
+
 @GrpcTest
 public class BaseGrpcTest {
 

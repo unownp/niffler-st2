@@ -38,7 +38,8 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
             .$(byAttribute("data-tooltip-id", "remove-friend"));
     public static final String youAreFriends = "You are friends";
     private final ElementsCollection peopleTableRows = peopleTable.$$("tbody>tr");
-
+    private final SelenideElement submitInvitationButton = $(".button-icon_type_submit");
+    private final SelenideElement removeFriendButton = $(byAttribute("data-tooltip-id", "remove-friend"));
 
     public PeopleTable() {
         super($(".main-content__section").$(".table"));
@@ -151,7 +152,7 @@ public class PeopleTable extends BaseComponent<PeopleTable> {
         return requestFriendList.size();
     }
 
-    public int declineFriendRequest(BasePage<?> basePage,String username) {
+    public int declineFriendRequest(BasePage<?> basePage, String username) {
         peopleTable.$("td").shouldBe(visible);
         List<UserJson> userJsonList = parseTable(username);
         List<UserJson> requestFriendList = userJsonList.stream()

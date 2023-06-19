@@ -3,6 +3,7 @@ package guru.qa.niffler.controller;
 import guru.qa.niffler.model.CurrencyCalculateJson;
 import guru.qa.niffler.model.CurrencyJson;
 import guru.qa.niffler.service.CurrencyService;
+import guru.qa.niffler.service.GrpcCurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

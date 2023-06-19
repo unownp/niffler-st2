@@ -60,4 +60,11 @@ public class LoginPage extends BasePage<LoginPage> {
         return new MainPage();
     }
 
+    public MainPage signInWithCredentials(String username,String password) {
+        getUserNameInput().setValue(username);
+        getPasswordInput().setValue(password);
+        signInButton.click();
+        return new MainPage();
+    }
+
 }

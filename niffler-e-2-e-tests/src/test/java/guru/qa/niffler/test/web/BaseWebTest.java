@@ -12,6 +12,7 @@ public abstract class BaseWebTest {
     static void setUp() {
         Configuration.browser = "Firefox";
         Configuration.browserSize = "1500x1500";
+//        Configuration.holdBrowserOpen=true;
     }
 
 }

@@ -34,10 +34,10 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private CurrencyValues currency;
 
-    @Column(nullable = true)
+    @Column()
     private String firstname;
 
-    @Column(nullable = true)
+    @Column()
     private String surname;
 
     @Column(name = "photo", columnDefinition = "bytea")
@@ -128,7 +128,9 @@ public class UserEntity {
 
     public void removeFriends(UserEntity... friends) {
         for (UserEntity friend : friends) {
+            System.out.println(getFriends());
             getFriends().removeIf(f -> f.getFriend().getId().equals(friend.getId()));
+            System.out.println(getFriends());
         }
     }
 
@@ -151,5 +153,19 @@ public class UserEntity {
         int result = Objects.hash(id, username, currency, firstname, surname, friends, invites);
         result = 31 * result + Arrays.hashCode(photo);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", currency=" + currency +
+                ", firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", photo=" + Arrays.toString(photo) +
+                ", friends=" + friends +
+                ", invites=" + invites +
+                '}';
     }
 }
